@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\Route;
+use App\Article;
+use App\Category;
+use App\User;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -23,7 +26,21 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //Category
+        Route::bind('category', function($name)
+        {
+            return Category::where('name', str_replace('-', ' ', $name))->firstOrFail();
+        });
+
+        //Article
+        Route::bind('article', function($title){
+            return Article::where('title', str_replace('-', ' ', $title))->firstOrFail();
+        });
+
+        //User
+        Route::bind('user', function($name){
+            return User::where('name', str_replace('-', ' ', $name))->firstOrFail();
+        });
 
         parent::boot();
     }

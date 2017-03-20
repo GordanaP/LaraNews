@@ -11,7 +11,7 @@
             </button>
 
             <!-- Branding Image -->
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{ route('articles.index') }}">
                 <i class="fa fa-home" aria-hidden="true"></i>
             </a>
         </div>
@@ -21,7 +21,7 @@
             <ul class="nav navbar-nav">
                 @foreach ($categories as $category)
                     <li>
-                        <a href="#">
+                        <a href="{{ route('articles.by.category', str_slug($category->name)) }}">
                             {{ ucfirst($category->name) }}
                         </a>
                     </li>
@@ -30,6 +30,13 @@
 
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">
+
+                <li>
+                    <a href="{{ route('articles.create') }}">
+                        New Article
+                    </a>
+                </li>
+
                 <!-- Authentication Links -->
                 @if (Auth::guest())
                     <li><a href="{{ route('login') }}">Login</a></li>

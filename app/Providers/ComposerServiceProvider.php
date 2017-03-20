@@ -10,21 +10,6 @@ class ComposerServiceProvider extends ServiceProvider
 {
     use ModelFinder;
 
-    /**
-     * Share categories in tha navbar
-     *
-     * @return [type] [description]
-     */
-    public function composeNavbar()
-    {
-        View::composer('partials._nav', function($view)
-        {
-            $categories = $this->getCategories();
-
-            $view->with(compact('categories'));
-        });
-    }
-
 
     /**
      * Bootstrap the application services.
@@ -43,7 +28,6 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        return $this->composeNavbar();
-        //
+
     }
 }

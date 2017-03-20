@@ -7,10 +7,6 @@
 
 <title>{{ config('app.name') }} @yield('title')</title>
 
-<!-- Styles -->
-<link href="{{ asset('css/app.css') }}" rel="stylesheet">
-<link href="{{ asset('css/custom.css') }}" rel="stylesheet">
-
 <!-- Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -18,6 +14,12 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
 
 @yield('links')
+
+<!-- Styles -->
+<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+<link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+<link href="{{ asset('css/general.css') }}" rel="stylesheet">
+
 
 <!-- Scripts -->
 <script>

@@ -1,29 +1,27 @@
-body{font-family: 'Roboto Slab', serif; background: lightblue; margin: auto 0;}
-h1{font-size: 24px}
-
-h1,h2,h3,h4,h5,h6{margin-top: 0;}
-ul{margin: 0; padding: 0;}
-ul li{list-style: none;}
-
 .container{background: #fff; width: 75%;}
+.main__container{min-height: 500px; padding-top: 50px;}
 .navbar__container, .footer__container{padding: 0}
+
 .main__navbar{margin-bottom: 0; border-radius: 0; background: gray; border: none}
 .main__navbar ul.navbar-nav li a,
 .main__navbar a.navbar-brand{color: #c8c8c8}
 .main__navbar ul.navbar-nav li a:hover,
 .main__navbar ul.navbar-nav li a:focus{color: #fff}
-.main__container{min-height: 500px; padding-top: 50px;}
-
 
 h2.page__title{margin-bottom: 50px; font-weight: bold;}
 article.media{margin-bottom: 50px;}
 h4.media-heading{margin-bottom: 20px;}
+p.info{font-size: 12px; color: #aaa;}
+p.info a{font-size: 12px}
+div.article__buttons{margin: 25px 0 0 25px;}
+a.btn__edit{margin-right: 8px;}
+
 
 .panel__form{border: 1px solid #eee}
 .panel__form .panel-body{background: #f9f9f9; padding: 25px 50px; }
 
-h4.side__title{margin: 70px 0 0 40px}
 
+h4.side__title{margin: 70px 0 0 40px}
 
 
 footer{background:gray; padding: 20px 0; margin-top: 50px;}
