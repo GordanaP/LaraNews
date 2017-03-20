@@ -12,22 +12,22 @@
 
             <!-- Branding Image -->
             <a class="navbar-brand" href="#">
-                {{ config('app.name') }}
+                <i class="fa fa-home" aria-hidden="true"></i>
             </a>
         </div>
 
         <div class="collapse navbar-collapse" id="app-navbar-collapse">
             <!-- Left Side Of Navbar -->
-{{--             <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav">
                 @foreach ($categories as $category)
                     <li>
-                        <a href="{{ route('categories.show', str_slug($category->name)) }}">
+                        <a href="#">
                             {{ ucfirst($category->name) }}
                         </a>
                     </li>
                 @endforeach
             </ul>
- --}}
+
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->

@@ -8,3 +8,7 @@
     <h1>Welcome page</h1>
 
 @stop
+
+@section('sidebar')
+    {{-- expr --}}
+@stop
