@@ -1,7 +1,7 @@
 <!-- Info -->
 <p class="info">
     News by
-    <a href="{{ route('articles.by.user', str_slug($article->user->name)) }}">
+    <a href="{{ $article->path('user') }}">
         {{ $article->user->name }}
     </a>
 
@@ -11,7 +11,7 @@
     </a>
 
     Category
-    <a href="{{ route('articles.by.category', str_slug($article->category->name)) }}">
+    <a href="{{ $article->path('category') }}">
         {{ $article->category->name }}
     </a>
 </p>

@@ -16,6 +16,23 @@ class Article extends Model
     ];
 
     /**
+     * Url path
+     * @param  string $related [relation name]
+     * @return string
+     */
+    public function path($related = null)
+    {
+        if ($related != null)
+        {
+            return route('articles.by.'.$related, str_slug($this->$related->name));
+        }
+        else
+        {
+            return route('articles.show', str_slug($this->title));
+        }
+    }
+
+    /**
      * An article belongs to a category.
      *
      * return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -34,5 +51,7 @@ class Article extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+
 
 }

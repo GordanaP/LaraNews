@@ -11,7 +11,7 @@
 
         <!-- Title -->
         <h4 class="media-heading">
-            <a href="{{ route('articles.show', str_slug($article->title)) }}">
+            <a href="{{ $article->path() }}">
                 {{ $article->title }}
             </a>
         </h4>

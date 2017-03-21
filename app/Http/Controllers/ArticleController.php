@@ -33,7 +33,7 @@ class ArticleController extends Controller
      */
     public function byCategory(Category $category)
     {
-        $articles = $this->filterArticles('category_id', $category->id);
+        $articles = $this->getArticlesBy($category);
 
         return view('articles.index', compact('articles'));
     }
@@ -46,7 +46,7 @@ class ArticleController extends Controller
      */
     public function byUser(User $user)
     {
-        $articles = $this->filterArticles('user_id', $user->id);
+        $articles = $this->getArticlesBy($user);
 
         return view('articles.index', compact('articles'));
     }

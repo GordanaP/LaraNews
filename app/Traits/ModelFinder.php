@@ -7,6 +7,8 @@ use App\Category;
 
 trait ModelFinder
 {
+    protected $pp = 6;
+
     /**
      * Fetch all categories
      *
@@ -26,27 +28,22 @@ trait ModelFinder
      * @param  int $pp
      * @return collection
      */
-    public function getArticles($pp = 6)
+    public function getArticles()
     {
         return Article::latest()
                 ->with('user', 'category')
-                ->paginate($pp);
+                ->paginate($this->pp);
     }
 
     /**
-     * Filter articles
+     * Fetch all articles by a filter
      *
-     * @param  string $sort  [column]
-     * @param  string $order [order]
-     * @param  int $id
+     * @param  int $filter
      * @return collection
      */
-    public function filterArticles($column, $id, $pp = 6)
+    public function getArticlesBy($filter)
     {
-        return Article::latest()
-                ->with('user', 'category')
-                ->where($column, $id)
-                ->paginate($pp);
+        return $filter->articles()->with('user','category')->paginate($this->pp);
     }
 
 }

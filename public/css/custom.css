@@ -5,6 +5,7 @@
 .main__navbar{margin-bottom: 0; border-radius: 0; background: gray; border: none}
 .main__navbar ul.navbar-nav li a,
 .main__navbar a.navbar-brand{color: #c8c8c8}
+.main__navbar a.navbar-brand:hover,
 .main__navbar ul.navbar-nav li a:hover,
 .main__navbar ul.navbar-nav li a:focus{color: #fff}
 
