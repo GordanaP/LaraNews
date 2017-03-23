@@ -2,16 +2,17 @@
 
     <!-- Image -->
     <div class="media-left">
-        <a href="#">
-            <img class="media-object" src="..." alt="...">
-        </a>
+        @include('partials._file', [
+            'name' => 'article',
+            'width' => '150px'
+        ])
     </div>
 
     <div class="media-body">
 
         <!-- Title -->
         <h4 class="media-heading">
-            <a href="{{ $article->path() }}">
+            <a href="{{ $article->path('show') }}">
                 {{ $article->title }}
             </a>
         </h4>

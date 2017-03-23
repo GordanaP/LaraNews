@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Article;
 use App\Category;
 use App\Http\Requests\ArticleRequest;
+use App\Http\Requests\StatusRequest;
 use App\Traits\ModelFinder;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
@@ -51,7 +53,6 @@ class ArticleController extends Controller
         return view('articles.index', compact('articles'));
     }
 
-
     /**
      * Show the form for creating a new resource.
      *
@@ -70,7 +71,14 @@ class ArticleController extends Controller
      */
     public function store(ArticleRequest $request)
     {
-        $article = Auth::user()->createArticle($request->all());
+        //Article
+        $article = Auth::user()->createArticle($request->except('image'));
+
+        //File
+        if($file = $request->image)
+        {
+            $file->storeAs('articles', filename($article->id, 'article'));
+        }
 
         flash()->success('A new article has been created. To see the article
             <a href="' .route('articles.show', str_slug($article->title)) .'">click here.</a>');
@@ -85,7 +93,22 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
+        $article = $this->getArticle($article->id);
+
         return view('articles.show', compact('article'));
+    }
+
+    /**
+     * Display the file
+     *
+     * @param  \App\Article $article
+     * @return file
+     */
+    public function showFile(Article $article)
+    {
+        $file = Storage::disk('articles')->get(filename($article->id, 'article'));
+
+        return $file;
     }
 
     /**
@@ -108,11 +131,33 @@ class ArticleController extends Controller
      */
     public function update(ArticleRequest $request, Article $article)
     {
-        $article->update($request->all());
+        //Article
+        $article->update($request->except('image'));
 
-        flash()->success('A new article has been created. To see the article <a href="' .route('articles.show', str_slug($article->title)) .'">click here.</a>');
+        //File
+        if($file = $request->image)
+        {
+            $file->storeAs('articles', filename($article->id, 'article'));
+        }
+
+        flash()->success('The article has been updated. To see the article <a href="' .route('articles.show', str_slug($article->title)) .'">click here.</a>');
         return redirect()->route('articles.edit', str_slug($article->title));
 
+    }
+
+    /**
+     * Update the article status
+     *
+     * @param  Request $request
+     * @param  \App\Article $article
+     * @return \Illuminate\Http\Response
+     */
+    public function updateStatus(StatusRequest $request, Article $article)
+    {
+        $article->update($request->only('status'));
+
+        flash()->success('The article status has been updated. To change the article <a href="' .route('articles.edit', str_slug($article->title)) .'">click here.</a>');
+        return back();
     }
 
     /**
@@ -123,6 +168,10 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
+        //File
+        Storage::disk('articles')->delete(filename($article->id, 'article'));
+
+        //Article
         $article->delete();
 
         flash()->success('The article has been deleted');

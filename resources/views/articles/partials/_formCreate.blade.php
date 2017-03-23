@@ -1,5 +1,20 @@
 {{ csrf_field() }}
 
+<!-- Image -->
+<div class="flex justify-between">
+    <div class="form-group">
+        <label for="image">Image</label>
+        <input type="file" name="image">
+    </div>
+
+    <div>
+        @include('partials._file', [
+            'name' => 'article',
+            'width' => '100px'
+        ])
+    </div>
+</div>
+
 <!-- Title -->
 <div class="form-group">
     <label for="title">Title</label>

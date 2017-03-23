@@ -32,6 +32,7 @@ trait ModelFinder
     {
         return Article::latest()
                 ->with('user', 'category')
+                ->published(true)
                 ->paginate($this->pp);
     }
 
@@ -44,6 +45,17 @@ trait ModelFinder
     public function getArticlesBy($filter)
     {
         return $filter->articles()->with('user','category')->paginate($this->pp);
+    }
+
+    /**
+     * Fetch single article
+     *
+     * @param  int $id
+     * @return collection
+     */
+    public function getArticle($id)
+    {
+        return Article::with('user', 'category')->find($id);
     }
 
 }

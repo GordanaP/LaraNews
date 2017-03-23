@@ -27,18 +27,20 @@ class ArticleRequest extends FormRequest
         {
             case 'POST':
                 return [
-                    'title' => 'required|max:80|regex:/^[a-zA-Z0-9- ]+$/|unique:articles,title',
+                    'title' => 'required|max:80|regex:/^[a-zA-Z0-9 ]+$/|unique:articles,title',
                     'body' => 'required',
-                    'category_id' =>'required|exists:categories,id'
+                    'category_id' =>'required|exists:categories,id',
+                    'image' => 'file|mimes:jpg,jpeg,png,gif'
                 ];
                 break;
 
             case 'PATCH':
             case 'PUT':
                 return [
-                    'title' => 'required|max:80|regex:/^[a-zA-Z0-9- ]+$/|unique:articles,title,'.$this->article->id,
+                    'title' => 'required|max:80|regex:/^[a-zA-Z0-9 ]+$/|unique:articles,title,'.$this->article->id,
                     'body' => 'required',
-                    'category_id' =>'required|exists:categories,id'
+                    'category_id' =>'required|exists:categories,id',
+                    'image' => 'file|mimes:jpg,jpeg,png,gif'
                 ];
                 break;
         }

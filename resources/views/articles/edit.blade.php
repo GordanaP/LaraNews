@@ -20,7 +20,7 @@
     <div class="panel panel-default panel__form">
         <div class="panel-body">
 
-            <form action="{{ route('articles.update', str_slug($article->title)) }}" method="POST">
+            <form action="{{ $article->path('update') }}" method="POST" enctype="multipart/form-data">
 
                 {{ method_field('PUT') }}
 

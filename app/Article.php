@@ -2,10 +2,13 @@
 
 namespace App;
 
+use App\Traits\Article\ArticlePathsTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
+    use ArticlePathsTrait;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -15,22 +18,6 @@ class Article extends Model
         'title', 'body', 'category_id', 'status'
     ];
 
-    /**
-     * Url path
-     * @param  string $related [relation name]
-     * @return string
-     */
-    public function path($related = null)
-    {
-        if ($related != null)
-        {
-            return route('articles.by.'.$related, str_slug($this->$related->name));
-        }
-        else
-        {
-            return route('articles.show', str_slug($this->title));
-        }
-    }
 
     /**
      * An article belongs to a category.
@@ -50,6 +37,17 @@ class Article extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function scopePublished($query, $flag)
+    {
+        return $query->where('status', $flag);
+    }
+
+    public function isPublished($bool)
+    {
+
+        return $bool == true ? $this->status = true : $this->status = false;
     }
 
 

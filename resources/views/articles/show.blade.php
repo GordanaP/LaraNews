@@ -2,15 +2,21 @@
 
 @section('title', '| Article')
 
+@section('messages')
+    @include('errors._list')
+    @include('flash::message')
+@stop
+
 @section('content')
 
     <article class="media">
 
         <!-- Image -->
-        <div class="media-left">
-            <a href="#">
-                <img class="media-object" src="..." alt="...">
-            </a>
+        <div>
+            @include('partials._file', [
+                'name' => 'article',
+                'width' => '100%'
+            ])
         </div>
 
         <div class="media-body">
@@ -26,19 +32,36 @@
 
         </div>
 
+        <div class="flex justify-between article__buttons">
 
-        <!-- Buttons -->
-        <div class="flex article__buttons">
+            <div class="flex">
 
-            <a href="{{ route('articles.edit', str_slug($article->title)) }}" class="btn btn-warning btn-sm btn__edit">
-                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-            </a>
+                <!-- Edit button -->
+                <span>
+                    <a href="{{ $article->path('edit') }}" class="btn btn-warning btn-sm btn__edit">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    </a>
+                </span>
 
-            <form action="{{ route('articles.destroy', str_slug($article->title)) }}" method="POST">
+                <!-- Delete button-->
+                <span>
+                    <form action="{{ $article->path('destroy') }}" method="POST">
 
-                @include('articles.partials._formDelete')
+                        @include('articles.partials._formDelete')
 
-            </form>
+                    </form>
+                </span>
+            </div>
+
+            <div >
+
+                <!-- Status update -->
+                <form action="{{ $article->path('status') }}" method="POST">
+
+                    @include('articles.partials._formStatus')
+
+                </form>
+            </div>
 
         </div>
 

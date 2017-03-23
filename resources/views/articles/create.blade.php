@@ -20,7 +20,7 @@
     <div class="panel panel-default panel__form">
         <div class="panel-body">
 
-            <form action="{{ route('articles.store') }}" method="POST">
+            <form action="{{ route('articles.store') }}" method="POST" enctype="multipart/form-data">
 
                 @include('articles.partials._formCreate', [
                     'button' => 'Create article',

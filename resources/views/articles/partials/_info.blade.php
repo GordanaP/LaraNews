@@ -1,7 +1,7 @@
 <!-- Info -->
 <p class="info">
     News by
-    <a href="{{ $article->path('user') }}">
+    <a href="{{ $article->related_path('user') }}">
         {{ $article->user->name }}
     </a>
 
@@ -11,7 +11,7 @@
     </a>
 
     Category
-    <a href="{{ $article->path('category') }}">
+    <a href="{{ $article->related_path('category') }}">
         {{ $article->category->name }}
     </a>
 </p>
