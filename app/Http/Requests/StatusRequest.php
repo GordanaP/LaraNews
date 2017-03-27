@@ -2,10 +2,14 @@
 
 namespace App\Http\Requests;
 
+use App\Traits\ModelFinder;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class StatusRequest extends FormRequest
 {
+    use ModelFinder;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -13,7 +17,7 @@ class StatusRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Gate::allows('update_status', $this->getArticle($this->article->id));
     }
 
     /**

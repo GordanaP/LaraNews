@@ -1,5 +1,9 @@
 <?php
 
+Route::name('welcome')->get('/', function(){
+    return view('welcome');
+});
+
 //Auth
 Auth::routes();
 

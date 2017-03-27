@@ -2,10 +2,14 @@
 
 namespace App\Http\Requests;
 
+use App\Traits\ModelFinder;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class ArticleRequest extends FormRequest
 {
+    use ModelFinder;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -13,7 +17,17 @@ class ArticleRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        switch ($this->method())
+        {
+            case 'POST':
+                return Gate::allows('create', 'App\Article');
+                break;
+
+            case 'PUT':
+            case 'PATCH':
+                return Gate::allows('update', $this->getArticle($this->article->id));
+                break;
+        }
     }
 
     /**
@@ -45,7 +59,5 @@ class ArticleRequest extends FormRequest
                 break;
         }
 
-        return [
-        ];
     }
 }

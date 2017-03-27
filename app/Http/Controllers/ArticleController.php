@@ -9,6 +9,7 @@ use App\Http\Requests\StatusRequest;
 use App\Traits\ModelFinder;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
@@ -60,7 +61,12 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        return view('articles.create');
+        if (Gate::allows('create', 'App\Article'))
+        {
+            return view('articles.create');
+        }
+
+        return view('welcome');
     }
 
     /**
@@ -81,7 +87,7 @@ class ArticleController extends Controller
         }
 
         flash()->success('A new article has been created. To see the article
-            <a href="' .route('articles.show', str_slug($article->title)) .'">click here.</a>');
+            <a href="' .$article->category_path('show') .'">click here.</a>');
         return back();
     }
 
@@ -119,7 +125,12 @@ class ArticleController extends Controller
      */
     public function edit(Category $category, Article $article)
     {
-        return view('articles.edit', compact('article'));
+        if (Gate::allows('update', $article))
+        {
+            return view('articles.edit', compact('article'));
+        }
+
+        return view('welcome');
     }
 
     /**
@@ -168,13 +179,18 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        //File
-        Storage::disk('articles')->delete(filename($article->id, 'article'));
+        if (Gate::allows('delete', $article))
+        {
+            //File
+            Storage::disk('articles')->delete(filename($article->id, 'article'));
 
-        //Article
-        $article->delete();
+            //Article
+            $article->delete();
 
-        flash()->success('The article has been deleted');
-        return redirect()->route('articles.index');
+            flash()->success('The article has been deleted');
+            return redirect()->route('articles.index');
+        }
+
+        return view('welcome');
     }
 }

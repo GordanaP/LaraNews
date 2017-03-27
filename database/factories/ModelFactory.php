@@ -30,3 +30,9 @@ $factory->define(App\Article::class, function (Faker\Generator $faker) {
         'body' => $faker->paragraph
     ];
 });
+
+$factory->define(App\Role::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->word,
+    ];
+});

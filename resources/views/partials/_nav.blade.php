@@ -31,11 +31,13 @@
             <!-- Right Side Of Navbar -->
             <ul class="nav navbar-nav navbar-right">
 
-                <li>
-                    <a href="{{ route('articles.create') }}">
-                        New Article
-                    </a>
-                </li>
+                @can('create', 'App\Article')
+                    <li>
+                        <a href="{{ route('articles.create') }}">
+                            New Article
+                        </a>
+                    </li>
+                @endcan
 
                 <!-- Authentication Links -->
                 @if (Auth::guest())
