@@ -38,7 +38,7 @@
 
                 <!-- Edit button -->
                 <span>
-                    <a href="{{ $article->path('edit') }}" class="btn btn-warning btn-sm btn__edit">
+                    <a href="{{ $article->category_path('edit') }}" class="btn btn-warning btn-sm btn__edit">
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     </a>
                 </span>

@@ -18,7 +18,12 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        View::composer(['partials._nav', 'articles.partials._formCreate'], function($view)
+        {
+            $categories = $this->getCategories();
 
+            return $view->with(compact('categories'));
+        });
     }
 
     /**

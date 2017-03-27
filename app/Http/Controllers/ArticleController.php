@@ -91,7 +91,7 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function show(Article $article)
+    public function show(Category $category, Article $article)
     {
         $article = $this->getArticle($article->id);
 
@@ -117,7 +117,7 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function edit(Article $article)
+    public function edit(Category $category, Article $article)
     {
         return view('articles.edit', compact('article'));
     }
@@ -140,8 +140,8 @@ class ArticleController extends Controller
             $file->storeAs('articles', filename($article->id, 'article'));
         }
 
-        flash()->success('The article has been updated. To see the article <a href="' .route('articles.show', str_slug($article->title)) .'">click here.</a>');
-        return redirect()->route('articles.edit', str_slug($article->title));
+        flash()->success('The article has been updated. To see the article <a href="' .$article->category_path('show') .'">click here.</a>');
+        return redirect($article->category_path('edit'));
 
     }
 
@@ -156,7 +156,7 @@ class ArticleController extends Controller
     {
         $article->update($request->only('status'));
 
-        flash()->success('The article status has been updated. To change the article <a href="' .route('articles.edit', str_slug($article->title)) .'">click here.</a>');
+        flash()->success('The article status has been updated');
         return back();
     }
 

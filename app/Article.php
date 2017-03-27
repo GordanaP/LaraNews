@@ -39,17 +39,27 @@ class Article extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * A collection of published articles.
+     *
+     * @param  string $query
+     * @param  bool $flag
+     * @return mixed
+     */
     public function scopePublished($query, $flag)
     {
         return $query->where('status', $flag);
     }
 
+    /**
+     * A published article
+     *
+     * @param  bool  $bool
+     * @return boolean
+     */
     public function isPublished($bool)
     {
-
         return $bool == true ? $this->status = true : $this->status = false;
     }
-
-
 
 }

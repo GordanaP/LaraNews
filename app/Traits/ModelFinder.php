@@ -31,9 +31,9 @@ trait ModelFinder
     public function getArticles()
     {
         return Article::latest()
-                ->with('user', 'category')
-                ->published(true)
-                ->paginate($this->pp);
+            ->with('user', 'category')
+            ->published(true)
+            ->paginate($this->pp);
     }
 
     /**
@@ -44,7 +44,9 @@ trait ModelFinder
      */
     public function getArticlesBy($filter)
     {
-        return $filter->articles()->with('user','category')->paginate($this->pp);
+        return $filter->articles()
+            ->with('user','category')
+            ->paginate($this->pp);
     }
 
     /**
@@ -55,7 +57,7 @@ trait ModelFinder
      */
     public function getArticle($id)
     {
-        return Article::with('user', 'category')->find($id);
+        return Article::with('user', 'category')->findOrFail($id);
     }
 
 }
