@@ -30,7 +30,7 @@ class ArticlePolicy
      */
     public function update(User $user, Article $article)
     {
-        return $user->owns($article) || $user->hasRole('editor');
+        return $user->owns($article) || $user->hasRole('editor') && $user->profile->category_id == $article->category_id;
     }
 
     /**
@@ -42,7 +42,7 @@ class ArticlePolicy
      */
     public function delete(User $user, Article $article)
     {
-        return $user->owns($article) || $user->hasRole('editor');
+            return $user->owns($article) || $user->hasRole('editor') && $user->profile->category_id == $article->category_id;
     }
 
     /**
@@ -54,7 +54,7 @@ class ArticlePolicy
      */
     public function update_status(User $user, Article $article)
     {
-        return $user->hasRole('editor');
+        return $user->hasRole('editor') && $user->profile->category_id == $article->category_id;
     }
 
 }

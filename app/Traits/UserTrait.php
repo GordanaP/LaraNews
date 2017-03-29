@@ -2,6 +2,8 @@
 
 namespace App\Traits;
 
+use App\Role;
+
 trait UserTrait
 {
     /**
@@ -42,6 +44,19 @@ trait UserTrait
     public function owns($article)
     {
         return $this->id  == $article->user_id;
+    }
+
+    public function isOwner($article)
+    {
+        return $this->where('id', $article->user_id)->firstOrFail();
+    }
+
+
+    public function actAs($role)
+    {
+        $role = Role::with('users')->where('name', $role)->firstOrFail();
+
+        return $role->users;
     }
 
 }

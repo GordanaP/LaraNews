@@ -31,14 +31,17 @@
 <div class="form-group">
     <label for="category_id">Category</label>
     <select name="category_id" id="category_id" class="form-control">
-        <option selected disabled>Select a category</option>
+        {{-- <option selected disabled>Select a category</option>
         @foreach ($categories as $category)
             <option value="{{ $category->id }}"
                 {{ selected($category->id, old('category_id') ?? $article->category_id) }}
             >
                 {{ ucfirst($category->name) }}
             </option>
-        @endforeach
+        @endforeach --}}
+        <option selected value="{{ Auth::user()->profile->category_id }}">
+            {{ ucfirst(Auth::user()->profile->category->name) }}
+        </option>
     </select>
 </div>
 

@@ -60,4 +60,6 @@ trait ModelFinder
         return Article::with('user', 'category')->findOrFail($id);
     }
 
+
+
 }

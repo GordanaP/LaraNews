@@ -23,4 +23,14 @@ class Category extends Model
         return $this->hasMany(Article::class);
     }
 
+    /**
+     * A category has many profiles.
+     *
+     * return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function profiles()
+    {
+        return $this->hasMany(Profile::class);
+    }
+
 }

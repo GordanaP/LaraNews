@@ -57,6 +57,7 @@
 
             </div>
 
+
             <!-- Update status -->
             @can('update_status', $article)
                 <div >

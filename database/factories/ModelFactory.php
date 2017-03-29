@@ -31,8 +31,20 @@ $factory->define(App\Article::class, function (Faker\Generator $faker) {
     ];
 });
 
+//Role
 $factory->define(App\Role::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->word,
+    ];
+});
+
+//Profile
+$factory->define(App\Profile::class, function (Faker\Generator $faker) {
+    return [
+        'first_name' => $faker->firstName,
+        'last_name' => $faker->lastName,
+        'biography' => $faker->paragraph,
+        'category_id' => \App\Category::all()->random()->id,
+        'user_id' => \App\User::all()->random()->id
     ];
 });
