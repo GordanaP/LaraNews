@@ -2,8 +2,8 @@
 
 namespace App\Policies;
 
-use App\User;
 use App\Article;
+use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class ArticlePolicy
@@ -56,4 +56,5 @@ class ArticlePolicy
     {
         return $user->hasRole('editor');
     }
+
 }

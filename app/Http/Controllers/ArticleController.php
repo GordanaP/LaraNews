@@ -16,6 +16,11 @@ class ArticleController extends Controller
 {
     use ModelFinder;
 
+    public function __construct()
+    {
+        $this->authorizeResource(Article::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -61,12 +66,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        if (Gate::allows('create', 'App\Article'))
-        {
-            return view('articles.create');
-        }
-
-        return view('welcome');
+        return view('articles.create');
     }
 
     /**
@@ -105,7 +105,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * Display the file
+     * Display the file.
      *
      * @param  \App\Article $article
      * @return file
@@ -125,12 +125,7 @@ class ArticleController extends Controller
      */
     public function edit(Category $category, Article $article)
     {
-        if (Gate::allows('update', $article))
-        {
-            return view('articles.edit', compact('article'));
-        }
-
-        return view('welcome');
+        return view('articles.edit', compact('article'));
     }
 
     /**
@@ -157,21 +152,6 @@ class ArticleController extends Controller
     }
 
     /**
-     * Update the article status
-     *
-     * @param  Request $request
-     * @param  \App\Article $article
-     * @return \Illuminate\Http\Response
-     */
-    public function updateStatus(StatusRequest $request, Article $article)
-    {
-        $article->update($request->only('status'));
-
-        flash()->success('The article status has been updated');
-        return back();
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Article  $article
@@ -179,18 +159,41 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        if (Gate::allows('delete', $article))
-        {
-            //File
-            Storage::disk('articles')->delete(filename($article->id, 'article'));
+        //File
+        Storage::disk('articles')->delete(filename($article->id, 'article'));
 
-            //Article
-            $article->delete();
+        //Article
+        $article->delete();
 
-            flash()->success('The article has been deleted');
-            return redirect()->route('articles.index');
-        }
-
-        return view('welcome');
+        flash()->success('The article has been deleted');
+        return redirect()->route('articles.index');
     }
+
+    /**
+     * Update the article status
+     *
+     * @param  Request $request
+     * @param  \App\Article $article
+     * @return \Illuminate\Http\Response
+     */
+    public function update_status(StatusRequest $request, Article $article)
+    {
+        $article->update($request->only('status'));
+
+        flash()->success('The article status has been updated');
+        return back();
+    }
+
+    public function resourceAbilityMap()
+    {
+         return [
+            'create'  => 'create',
+            'store'   => 'create',
+            'edit'    => 'update',
+            'update'  => 'update',
+            'destroy' => 'delete',
+            'update_status' => 'update_status'
+        ];
+    }
+
 }

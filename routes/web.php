@@ -13,7 +13,7 @@ Route::prefix('articles')->as('articles.')->group(function(){
     Route::name('index')->get('/', 'ArticleController@index');
     Route::name('by.category')->get('categories/{category}', 'ArticleController@byCategory');
     Route::name('by.user')->get('users/{user}', 'ArticleController@byUser');
-    Route::name('status')->patch('{article}/status', 'ArticleController@updateStatus');
+    Route::name('status')->patch('{article}/status', 'ArticleController@update_status');
     Route::name('show')->get('{category}/{article}', 'ArticleController@show');
     Route::name('edit')->get('{category}/{article}/edit', 'ArticleController@edit');
 });

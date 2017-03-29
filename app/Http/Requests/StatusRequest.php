@@ -17,7 +17,7 @@ class StatusRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('update_status', $this->getArticle($this->article->id));
+        return true;
     }
 
     /**
