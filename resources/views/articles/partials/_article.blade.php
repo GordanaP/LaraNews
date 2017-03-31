@@ -17,11 +17,11 @@
             </a>
         </h4>
 
-        <!-- Body -->
-        <p class="body">{{ $article->body }}</p>
-
         <!-- Info -->
         @include('articles.partials._info')
+
+        <!-- Body -->
+        <p class="body">{{ $article->body }}</p>
 
     </div>
 

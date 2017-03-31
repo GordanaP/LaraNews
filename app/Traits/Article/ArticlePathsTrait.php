@@ -26,7 +26,6 @@ trait ArticlePathsTrait
         return route('articles.'.$name, [str_slug($this->category->name), str_slug($this->title)]);
     }
 
-
     /**
      * Url path to the related articles
      *

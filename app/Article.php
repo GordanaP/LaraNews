@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Traits\Article\ArticlePathsTrait;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
@@ -15,9 +16,15 @@ class Article extends Model
      * @var array
      */
     protected $fillable = [
-        'title', 'body', 'category_id', 'status'
+        'title', 'body', 'category_id', 'status', 'published_at'
     ];
 
+    /**
+     * The attributes that are convertable to carbon instance.
+     *
+     * @var array
+     */
+    protected $dates = ['published_at'];
 
     /**
      * An article belongs to a category.
@@ -40,26 +47,68 @@ class Article extends Model
     }
 
     /**
-     * A collection of published articles.
+     * A collection of approved articles.
      *
      * @param  string $query
      * @param  bool $flag
      * @return mixed
      */
-    public function scopePublished($query, $flag)
+    public function scopeApproved($query, $flag)
     {
         return $query->where('status', $flag);
     }
 
     /**
-     * A published article
+     * Get published articles
+     *
+     * @param  $query
+     * @return collection
+     */
+    public function scopePublished($query)
+    {
+        return $query->where('published_at', '<=', Carbon::now());
+    }
+
+    /**
+     * Get unpublished articles
+     *
+     * @param  $query
+     * @return collection
+     */
+    public function scopeUnpublished($query)
+    {
+        return $query->where('published_at', '>=', Carbon::now());
+    }
+
+    /**
+     * An approved article
      *
      * @param  bool  $bool
      * @return boolean
      */
-    public function isPublished($bool)
+    public function status()
     {
-        return $bool == true ? $this->status = true : $this->status = false;
+        if ($this->status == false)
+        {
+            return "Under te consideration";
+        }
+        elseif ($this->status == true && $this->published_at >= Carbon::today())
+        {
+            return "Approved";
+        }
+        elseif ($this->status == true && $this->published_at <= Carbon::today()) {
+            return "Published";
+        }
+
     }
 
+    /**
+     * Make carbon instance of date
+     *
+     * @param string $date
+     */
+    public function setPublishedAtAttribute($date)
+    {
+        $this->attributes['published_at'] = Carbon::parse($date);
+    }
 }

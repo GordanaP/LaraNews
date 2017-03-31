@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Traits\ModelFinder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
+    use ModelFinder;
+
     /**
      * Create a new controller instance.
      *
@@ -23,6 +27,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $articles = $this->getArticlesBy(Auth::user());
+
+        return view('home', compact('articles'));
     }
 }

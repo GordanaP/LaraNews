@@ -22,4 +22,4 @@ Route::prefix('articles')->as('articles.')->group(function(){
 Route::name('show.file')->get('/file/{article}', 'ArticleController@showFile');
 
 //Home
-Route::get('/home', 'HomeController@index');
+Route::name('home')->get('/home', 'HomeController@index');

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '| Article')
+@section('title', '| ' .$article->title)
 
 @section('messages')
     @include('errors._list')
@@ -10,6 +10,15 @@
 @section('content')
 
     <article class="media">
+
+        <!-- Title -->
+        <h1 class="title">{{ $article->title }}</h1>
+
+        <!-- Info -->
+        @include('articles.partials._info')
+
+        <!-- Headline -->
+        <p class="body">{{ $article->body }}</p>
 
         <!-- Image -->
         <div>
@@ -21,14 +30,8 @@
 
         <div class="media-body">
 
-            <!-- Title -->
-            <h1>{{ $article->title }}</h1>
-
             <!-- Body -->
             <p class="body">{{ $article->body }}</p>
-
-            <!-- Info -->
-            @include('articles.partials._info')
 
         </div>
 
@@ -47,25 +50,27 @@
                 <!-- Delete button-->
                 @can('delete', $article)
                     <span>
-                        <form action="{{ $article->path('destroy') }}" method="POST">
-
-                            @include('articles.partials._formDelete')
-
-                        </form>
+                        @include('articles.partials._formDelete')
                     </span>
                 @endcan
 
-            </div>
+                @can('update', $article)
+                    <span class="status">
+                        Status: <b>{{ $article->status() }}</b>
+                    </span>
 
+                    <span>
+                        @if ($article->status() == "Approved")
+                            Publishing date: <b>{{ $article->published_at->format('d M Y') }}</b>
+                        @endif
+                    </span>
+                @endcan
+            </div>
 
             <!-- Update status -->
             @can('update_status', $article)
                 <div >
-                    <form action="{{ $article->path('status') }}" method="POST">
-
-                        @include('articles.partials._formStatus')
-
-                    </form>
+                    @include('articles.partials._formStatus')
                 </div>
             @endcan
 

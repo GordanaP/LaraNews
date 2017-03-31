@@ -31,19 +31,39 @@
 <div class="form-group">
     <label for="category_id">Category</label>
     <select name="category_id" id="category_id" class="form-control">
-        {{-- <option selected disabled>Select a category</option>
-        @foreach ($categories as $category)
-            <option value="{{ $category->id }}"
-                {{ selected($category->id, old('category_id') ?? $article->category_id) }}
-            >
-                {{ ucfirst($category->name) }}
-            </option>
-        @endforeach --}}
         <option selected value="{{ Auth::user()->profile->category_id }}">
             {{ ucfirst(Auth::user()->profile->category->name) }}
         </option>
     </select>
 </div>
+
+@if (Auth::user()->hasRole('editor'))
+
+    <!-- Status -->
+    <div class="form-group">
+        <div class="radio">
+          <label>
+            <input type="radio" name="status" id="status" value="0" default checked
+            >
+            Draft
+          </label>
+
+          <label>
+            <input type="radio" name="status" id="status" value="1"
+                {{ checked( 1, $status) }}
+                        >
+            Publish
+          </label>
+        </div>
+    </div>
+
+    <!-- Published at -->
+    <div class="form-group">
+        <label for="published_at">Publishing date</label>
+        <input type="date" name="published_at" id="published_at" class="form-control" value="{{ date('Y-m-d') }}" />
+    </div>
+
+@endif
 
 <!-- Button -->
 <div class="form-group">

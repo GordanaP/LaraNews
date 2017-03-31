@@ -17,6 +17,7 @@ class Handler extends ExceptionHandler
         \Illuminate\Auth\AuthenticationException::class,
         \Illuminate\Auth\Access\AuthorizationException::class,
         \Symfony\Component\HttpKernel\Exception\HttpException::class,
+        \Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException::class,
         \Illuminate\Database\Eloquent\ModelNotFoundException::class,
         \Illuminate\Session\TokenMismatchException::class,
         \Illuminate\Validation\ValidationException::class,
@@ -50,12 +51,18 @@ class Handler extends ExceptionHandler
         }
 
         if ($e instanceof TokenMismatchException) {
-            return redirect()->back()->withInput($request->except('password'))->withErrors(['Validation Token was expired. Please try again']);
+            // return redirect()->back()->withInput($request->except('password'))->withErrors(['Validation Token was expired. Please try again']);
+            return redirect()->guest(route('login'));
         }
 
         // Redirect to the home route
         if ($e instanceof NotFoundHttpException) {
-            return redirect()->route('welcome');
+            return redirect()->guest(route('login'));
+        }
+
+        // Redirect to the home route
+        if ($e instanceof MethodNotAllowedHttpException) {
+            return redirect()->guest(route('login'));
         }
 
         return parent::render($request, $e);

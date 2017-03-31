@@ -1,17 +1,10 @@
 <!-- Info -->
 <p class="info">
-    News by
+    By
     <a href="{{ $article->related_path('user') }}">
-        {{ $article->user->name }}
+        {{ fullname($article->user->profile->first_name, $article->user->profile->last_name) }}
     </a>
 
-    Posted
-    <a href="#">
-        {{ $article->created_at->diffForHumans() }}
-    </a>
+    <span>{{ $article->published_at->format('d M Y') }}</span>
 
-    Category
-    <a href="{{ $article->related_path('category') }}">
-        {{ $article->category->name }}
-    </a>
 </p>

@@ -24,10 +24,15 @@ $factory->define(App\Category::class, function (Faker\Generator $faker) {
 //Articles
 $factory->define(App\Article::class, function (Faker\Generator $faker) {
     return [
-        'user_id' => \App\User::all()->random()->id,
-        'category_id' => \App\Category::all()->random()->id,
+        'user_id' => function(){
+            return factory('App\User')->create()->id;
+        },
+        'category_id' => function(){
+            return factory('App\Category')->create()->id;
+        },
         'title' => rtrim($faker->sentence, '.'),
-        'body' => $faker->paragraph
+        'body' => $faker->paragraph,
+        'published_at' => \Carbon\Carbon::tomorrow()
     ];
 });
 
@@ -44,7 +49,11 @@ $factory->define(App\Profile::class, function (Faker\Generator $faker) {
         'first_name' => $faker->firstName,
         'last_name' => $faker->lastName,
         'biography' => $faker->paragraph,
-        'category_id' => \App\Category::all()->random()->id,
-        'user_id' => \App\User::all()->random()->id
+        'category_id' => function(){
+            return factory('App\Category')->create()->id;
+        },
+        'user_id' => function(){
+            return factory('App\User')->create()->id;
+        }
     ];
 });

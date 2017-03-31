@@ -28,7 +28,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = $this->getArticles();
+        $articles = $this->getPublished();
 
         return view('articles.index', compact('articles'));
     }
@@ -41,7 +41,7 @@ class ArticleController extends Controller
      */
     public function byCategory(Category $category)
     {
-        $articles = $this->getArticlesBy($category);
+        $articles = $this->getPublishedBy($category);
 
         return view('articles.index', compact('articles'));
     }
@@ -54,7 +54,7 @@ class ArticleController extends Controller
      */
     public function byUser(User $user)
     {
-        $articles = $this->getArticlesBy($user);
+        $articles = $this->getPublishedBy($user);
 
         return view('articles.index', compact('articles'));
     }
@@ -146,8 +146,8 @@ class ArticleController extends Controller
             $file->storeAs('articles', filename($article->id, 'article'));
         }
 
-        flash()->success('The article has been updated. To see the article <a href="' .$article->category_path('show') .'">click here.</a>');
-        return redirect($article->category_path('edit'));
+        flash()->success('The article has been updated.');
+        return redirect($article->category_path('show'));
 
     }
 

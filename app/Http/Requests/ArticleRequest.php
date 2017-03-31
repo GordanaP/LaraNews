@@ -34,6 +34,7 @@ class ArticleRequest extends FormRequest
                     'title' => 'required|max:80|regex:/^[a-zA-Z0-9 ]+$/|unique:articles,title',
                     'body' => 'required',
                     'category_id' =>'required|exists:categories,id',
+                    'status' => 'in:0,1',
                     'image' => 'file|mimes:jpg,jpeg,png,gif'
                 ];
                 break;
@@ -44,6 +45,7 @@ class ArticleRequest extends FormRequest
                     'title' => 'required|max:80|regex:/^[a-zA-Z0-9 ]+$/|unique:articles,title,'.$this->article->id,
                     'body' => 'required',
                     'category_id' =>'required|exists:categories,id',
+                    'status' => 'in:0,1',
                     'image' => 'file|mimes:jpg,jpeg,png,gif'
                 ];
                 break;

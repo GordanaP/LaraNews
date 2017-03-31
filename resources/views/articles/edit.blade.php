@@ -26,6 +26,7 @@
 
                 @include('articles.partials._formCreate', [
                     'button' => 'Save changes',
+                    'status' => $article->status
                 ])
 
             </form>

@@ -21,7 +21,6 @@ trait ModelFinder
         return Category::orderBy($sort, $order)->get();
     }
 
-
     /**
      * Fetch all articles
      *
@@ -30,9 +29,36 @@ trait ModelFinder
      */
     public function getArticles()
     {
-        return Article::latest()
+        return Article::latest('published_at')
             ->with('user', 'category')
-            //->published(true)
+            ->paginate($this->pp);
+    }
+
+    /**
+     * Fetch published articles
+     *
+     * @param  int $pp
+     * @return collection
+     */
+    public function getPublished()
+    {
+        return Article::latest('published_at')
+            ->with('user', 'category')
+            ->published()
+            ->paginate($this->pp);
+    }
+
+    /**
+     * Fetch unpublished articles
+     *
+     * @param  int $pp
+     * @return collection
+     */
+    public function getUnpublished()
+    {
+        return Article::latest('published_at')
+            ->with('user', 'category')
+            ->unpublished()
             ->paginate($this->pp);
     }
 
@@ -50,6 +76,20 @@ trait ModelFinder
     }
 
     /**
+     * Fetch published articles by a filter
+     *
+     * @param  int $filter
+     * @return collection
+     */
+    public function getPublishedBy($filter)
+    {
+        return $filter->articles()
+            ->with('user','category')
+            ->published()
+            ->paginate($this->pp);
+    }
+
+    /**
      * Fetch single article
      *
      * @param  int $id
@@ -59,7 +99,5 @@ trait ModelFinder
     {
         return Article::with('user', 'category')->findOrFail($id);
     }
-
-
 
 }

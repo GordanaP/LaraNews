@@ -24,7 +24,8 @@
 
                 @include('articles.partials._formCreate', [
                     'button' => 'Create article',
-                    'article' => new \App\Article
+                    'article' => new \App\Article,
+                    'status' => old('status')
                 ])
 
             </form>

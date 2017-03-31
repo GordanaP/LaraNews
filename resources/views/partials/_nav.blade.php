@@ -20,7 +20,7 @@
             <!-- Left Side Of Navbar -->
             <ul class="nav navbar-nav">
                 @foreach ($categories as $category)
-                    <li>
+                    <li class="{{ active(str_slug($category->name), 2)}}{{ active(str_slug($category->name), 3)}}">
                         <a href="{{ route('articles.by.category', str_slug($category->name)) }}">
                             {{ ucfirst($category->name) }}
                         </a>
@@ -50,6 +50,19 @@
                         </a>
 
                         <ul class="dropdown-menu" role="menu">
+                            @can('create', 'App\Article')
+                                <li>
+                                <a href="{{ route('home') }}">
+                                    My articles
+                                </a>
+                            </li>
+                            @endcan
+
+                            <li>
+                                <a href="#">
+                                    My profile
+                                </a>
+                            </li>
                             <li>
                                 <a href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
