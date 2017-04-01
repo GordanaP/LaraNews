@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Category;
+use App\Filters\ArticleFilters;
 use App\Http\Requests\ArticleRequest;
 use App\Http\Requests\StatusRequest;
 use App\Traits\ModelFinder;
@@ -16,6 +17,8 @@ class ArticleController extends Controller
 {
     use ModelFinder;
 
+    protected $pp = 6;
+
     public function __construct()
     {
         $this->authorizeResource(Article::class);
@@ -26,9 +29,9 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ArticleFilters $filters)
     {
-        $articles = $this->getPublished();
+        $articles = $this->getPublished($filters)->paginate($this->pp);
 
         return view('articles.index', compact('articles'));
     }

@@ -1,6 +1,7 @@
 <!-- Info -->
 <p class="info">
     By
+    {{-- <a href="?author={{ str_slug($article->user->name) }}"> --}}
     <a href="{{ $article->related_path('user') }}">
         {{ fullname($article->user->profile->first_name, $article->user->profile->last_name) }}
     </a>

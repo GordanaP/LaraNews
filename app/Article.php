@@ -111,4 +111,17 @@ class Article extends Model
     {
         $this->attributes['published_at'] = Carbon::parse($date);
     }
+
+    /**
+     * Apply filters to query string
+     *
+     * @param  complex $query
+     * @param  array $filters
+     * @return mixed
+     */
+    public function scopeFilter($query, $filters)
+    {
+        //Ask ThreadFilters class to apply itself to the query
+        return $filters->apply($query);
+    }
 }

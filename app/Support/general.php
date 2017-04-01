@@ -38,6 +38,11 @@ function fullname($first, $last)
     return $first.' '.$last;
 }
 
+function rev_slug($slug)
+{
+    return str_replace('-', ' ', $slug);
+}
+
 /*
  *  Active class
  */

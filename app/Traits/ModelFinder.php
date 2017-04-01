@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Article;
 use App\Category;
+use App\User;
 
 trait ModelFinder
 {
@@ -27,12 +28,13 @@ trait ModelFinder
      * @param  int $pp
      * @return collection
      */
-    public function getArticles()
+    public function getArticles($filters)
     {
         return Article::latest('published_at')
             ->with('user', 'category')
-            ->paginate($this->pp);
+            ->filter($filters);
     }
+
 
     /**
      * Fetch published articles
@@ -40,12 +42,10 @@ trait ModelFinder
      * @param  int $pp
      * @return collection
      */
-    public function getPublished()
+    public function getPublished($filters)
     {
-        return Article::latest('published_at')
-            ->with('user', 'category')
-            ->published()
-            ->paginate($this->pp);
+        return $this->getArticles($filters)
+            ->published();
     }
 
     /**
@@ -54,12 +54,10 @@ trait ModelFinder
      * @param  int $pp
      * @return collection
      */
-    public function getUnpublished()
+    public function getUnpublished($filters)
     {
-        return Article::latest('published_at')
-            ->with('user', 'category')
-            ->unpublished()
-            ->paginate($this->pp);
+        return $this->getArticles($filters)
+            ->unpublished();
     }
 
     /**
@@ -71,6 +69,7 @@ trait ModelFinder
     public function getArticlesBy($filter)
     {
         return $filter->articles()
+            ->latest('published_at')
             ->with('user','category')
             ->paginate($this->pp);
     }
@@ -84,6 +83,7 @@ trait ModelFinder
     public function getPublishedBy($filter)
     {
         return $filter->articles()
+            ->latest('published_at')
             ->with('user','category')
             ->published()
             ->paginate($this->pp);

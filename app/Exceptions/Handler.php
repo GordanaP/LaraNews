@@ -47,7 +47,8 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $e)
     {
         if ($e instanceof ModelNotFoundException) {
-            $e = new NotFoundHttpException($e->getMessage(), $e);
+            return response(view('welcome'), 404);
+            // $e = new NotFoundHttpException($e->getMessage(), $e);
         }
 
         if ($e instanceof TokenMismatchException) {
@@ -57,7 +58,7 @@ class Handler extends ExceptionHandler
 
         // Redirect to the home route
         if ($e instanceof NotFoundHttpException) {
-            return redirect()->guest(route('login'));
+            return response(view('welcome'), 404);
         }
 
         // Redirect to the home route
