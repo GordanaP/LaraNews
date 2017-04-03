@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Article;
 use App\Category;
+use App\Role;
 use App\User;
 
 trait ModelFinder
@@ -34,7 +35,6 @@ trait ModelFinder
             ->with('user', 'category')
             ->filter($filters);
     }
-
 
     /**
      * Fetch published articles
@@ -70,8 +70,7 @@ trait ModelFinder
     {
         return $filter->articles()
             ->latest('published_at')
-            ->with('user','category')
-            ->paginate($this->pp);
+            ->with('user','category');
     }
 
     /**
@@ -85,8 +84,7 @@ trait ModelFinder
         return $filter->articles()
             ->latest('published_at')
             ->with('user','category')
-            ->published()
-            ->paginate($this->pp);
+            ->published();
     }
 
     /**
@@ -98,6 +96,16 @@ trait ModelFinder
     public function getArticle($id)
     {
         return Article::with('user', 'category')->findOrFail($id);
+    }
+
+    public function getUsers()
+    {
+        return User::with('roles');
+    }
+
+    function getRoles($sort = 'name', $order = 'asc')
+    {
+        return Role::orderBy($sort, $order);
     }
 
 }

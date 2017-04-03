@@ -38,40 +38,19 @@
         <div class="flex justify-between article__buttons">
             <div class="flex">
 
-                <!-- Edit button -->
+                <!-- Action buttons -->
+                @include('articles.partials._actionButtons')
+
+                <!-- Status info -->
                 @can('update', $article)
-                    <span>
-                        <a href="{{ $article->category_path('edit') }}" class="btn btn-warning btn-sm btn__edit">
-                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                        </a>
-                    </span>
+                    @include('articles.partials._statusInfo')
                 @endcan
 
-                <!-- Delete button-->
-                @can('delete', $article)
-                    <span>
-                        @include('articles.partials._formDelete')
-                    </span>
-                @endcan
-
-                @can('update', $article)
-                    <span class="status">
-                        Status: <b>{{ $article->status() }}</b>
-                    </span>
-
-                    <span>
-                        @if ($article->status() == "Approved")
-                            Publishing date: <b>{{ $article->published_at->format('d M Y') }}</b>
-                        @endif
-                    </span>
-                @endcan
             </div>
 
             <!-- Update status -->
             @can('update_status', $article)
-                <div >
-                    @include('articles.partials._formStatus')
-                </div>
+                <a href="#">Update status</a>
             @endcan
 
         </div>

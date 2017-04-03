@@ -52,11 +52,24 @@
                         <ul class="dropdown-menu" role="menu">
                             @can('create', 'App\Article')
                                 <li>
-                                <a href="{{ route('home') }}">
-                                    My articles
-                                </a>
-                            </li>
+                                    <a href="{{ route('home') }}">
+                                        My articles
+                                    </a>
+                                </li>
                             @endcan
+
+                            @if (Auth::user()->hasRole('admin'))
+                                <li>
+                                    <a href="{{ route('users.index') }}">
+                                        All Users
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('users.create') }}">
+                                        New User
+                                    </a>
+                                </li>
+                            @endif
 
                             <li>
                                 <a href="#">

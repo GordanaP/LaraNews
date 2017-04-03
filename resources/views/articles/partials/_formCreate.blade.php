@@ -31,9 +31,19 @@
 <div class="form-group">
     <label for="category_id">Category</label>
     <select name="category_id" id="category_id" class="form-control">
-        <option selected value="{{ Auth::user()->profile->category_id }}">
-            {{ ucfirst(Auth::user()->profile->category->name) }}
-        </option>
+        @if (Auth::user()->category)
+            <option selected value="{{ Auth::user()->profile->category_id }}">
+                {{ ucfirst(Auth::user()->profile->category->name) }}
+            </option>
+        @else
+            @foreach ($categories as $category)
+                <option value="{{ $category->id }}"
+                    {{ selected($category->id, old('category_id') ?? $article->category_id) }}
+                >
+                    {{ $category->name }}
+                </option>
+            @endforeach
+        @endif
     </select>
 </div>
 
@@ -60,7 +70,7 @@
     <!-- Published at -->
     <div class="form-group">
         <label for="published_at">Publishing date</label>
-        <input type="date" name="published_at" id="published_at" class="form-control" value="{{ date('Y-m-d') }}" />
+        <input type="date" name="published_at" id="published_at" class="form-control" value="{{ $date }}" />
     </div>
 
 @endif

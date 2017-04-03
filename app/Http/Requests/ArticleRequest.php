@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Traits\ModelFinder;
-use Illuminate\Foundation\Http\FormRequest;
+use Carbon\Carbon;
 use Gate;
+use Illuminate\Foundation\Http\FormRequest;
 
 class ArticleRequest extends FormRequest
 {
@@ -31,10 +32,11 @@ class ArticleRequest extends FormRequest
         {
             case 'POST':
                 return [
-                    'title' => 'required|max:80|regex:/^[a-zA-Z0-9 ]+$/|unique:articles,title',
+                    'title' => 'required|min:5|max:80|regex:/^[a-zA-Z0-9 ]+$/|unique:articles,title',
                     'body' => 'required',
                     'category_id' =>'required|exists:categories,id',
                     'status' => 'in:0,1',
+                    'published_at' => 'date|after_or_equal:today',
                     'image' => 'file|mimes:jpg,jpeg,png,gif'
                 ];
                 break;
@@ -42,10 +44,11 @@ class ArticleRequest extends FormRequest
             case 'PATCH':
             case 'PUT':
                 return [
-                    'title' => 'required|max:80|regex:/^[a-zA-Z0-9 ]+$/|unique:articles,title,'.$this->article->id,
+                    'title' => 'required|min:5|max:80|regex:/^[a-zA-Z0-9 ]+$/|unique:articles,title,'.$this->article->id,
                     'body' => 'required',
                     'category_id' =>'required|exists:categories,id',
                     'status' => 'in:0,1',
+                    'published_at' => 'date|after_or_equal:today',
                     'image' => 'file|mimes:jpg,jpeg,png,gif'
                 ];
                 break;

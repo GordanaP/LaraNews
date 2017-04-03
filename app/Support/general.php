@@ -1,13 +1,10 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Request;
 
 /**
  * Return the selected option
- *
- * @param  int $selected
- * @param  int $current
- * @return string
  */
 function selected($selected, $current)
 {
@@ -15,11 +12,15 @@ function selected($selected, $current)
 }
 
 /**
+ * Return the checked option
+ */
+function checked( $checked, $current)
+{
+    return $checked == $current ? "checked" : '';
+}
+
+/**
  * Return the file name
- *
- * @param  int $id
- * @param  string $name
- * @return string
  */
 function filename($id, $name)
 {
@@ -27,20 +28,27 @@ function filename($id, $name)
 }
 
 /**
- * Return the full name
- *
- * @param  string $first
- * @param  string $last
- * @return string
+ * Return the user full name
  */
 function fullname($first, $last)
 {
     return $first.' '.$last;
 }
 
+/**
+ * Convert a slug to a string
+ */
 function rev_slug($slug)
 {
     return str_replace('-', ' ', $slug);
+}
+
+/*
+ *  Return the value
+ */
+function get_value($value1, $value2)
+{
+    return $value1 ? $value2 : '';
 }
 
 /*
@@ -56,15 +64,7 @@ function active($link, $segment = null)
     return Request::segment($segment) == $link ? 'active' : '';
 }
 
-
-/**
- * Return the checked option
- *
- * @param  int $value1
- * @param  int $value2
- * @return boolean
- */
-function checked( $checked, $current)
+function toFormat($date)
 {
-    return $checked == $current ? "checked" : '';
+    return $date->format('Y-m-d');
 }

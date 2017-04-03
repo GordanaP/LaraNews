@@ -20,6 +20,7 @@
 <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 <link href="{{ asset('css/general.css') }}" rel="stylesheet">
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/6.5.1/sweetalert2.css">
 
 <!-- Scripts -->
 <script>

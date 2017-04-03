@@ -32,7 +32,6 @@ $factory->define(App\Article::class, function (Faker\Generator $faker) {
         },
         'title' => rtrim($faker->sentence, '.'),
         'body' => $faker->paragraph,
-        'published_at' => \Carbon\Carbon::tomorrow()
     ];
 });
 

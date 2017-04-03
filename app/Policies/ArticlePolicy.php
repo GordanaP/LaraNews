@@ -11,6 +11,23 @@ class ArticlePolicy
     use HandlesAuthorization;
 
     /**
+     * Determine whether the user can view the article.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Article  $article
+     * @return mixed
+     */
+    public function view(User $user, Article $article)
+    {
+        return ! $article->isPublished() && ($user->owns($article) || $user->isSectionEditorFor($article));
+    }
+
+    public function view_dashboard(User $user)
+    {
+        return ! $user->hasRole('subscriber');
+    }
+
+    /**
      * Determine whether the user can create articles.
      *
      * @param  \App\User  $user
@@ -30,19 +47,19 @@ class ArticlePolicy
      */
     public function update(User $user, Article $article)
     {
-        return $user->owns($article) || $user->hasRole('editor') && $user->profile->category_id == $article->category_id;
+        return $article->isDraft() && ($user->owns($article) || $user->isSectionEditorFor($article));
     }
 
     /**
      * Determine whether the user can delete the article.
      *
      * @param  \App\User  $user
-     * @param  \App\Article  $article
+     * @param  \Apap\Article  $article
      * @return mixed
      */
     public function delete(User $user, Article $article)
     {
-            return $user->owns($article) || $user->hasRole('editor') && $user->profile->category_id == $article->category_id;
+        return $article->isDraft() && ($user->owns($article) || $user->isSectionEditorFor($article));
     }
 
     /**
@@ -54,7 +71,15 @@ class ArticlePolicy
      */
     public function update_status(User $user, Article $article)
     {
-        return $user->hasRole('editor') && $user->profile->category_id == $article->category_id;
+        return $user->isSectionEditorFor($article);
+    }
+
+    public function before($user, $ability)
+    {
+        if ($user->hasRole('admin'))
+        {
+            return true;
+        }
     }
 
 }

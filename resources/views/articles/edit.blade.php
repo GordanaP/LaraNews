@@ -26,7 +26,8 @@
 
                 @include('articles.partials._formCreate', [
                     'button' => 'Save changes',
-                    'status' => $article->status
+                    'status' => $article->status,
+                    'date' => $article->published_at ? date($article->published_at->format('Y-m-d')) : date('Y-m-d')
                 ])
 
             </form>

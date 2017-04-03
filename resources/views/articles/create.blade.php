@@ -23,14 +23,19 @@
             <form action="{{ route('articles.store') }}" method="POST" enctype="multipart/form-data">
 
                 @include('articles.partials._formCreate', [
-                    'button' => 'Create article',
                     'article' => new \App\Article,
-                    'status' => old('status')
+                    'button' => 'Create article',
+                    'status' => old('status'),
+                    'date' => old('date') ? old('date') : date('Y-m-d')
                 ])
 
             </form>
 
         </div>
     </div>
+
+@stop
+
+@section('scripts')
 
 @stop

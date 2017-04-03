@@ -2,13 +2,14 @@
 
 namespace App;
 
+use App\Traits\Article\ArticleFeaturesTrait;
 use App\Traits\Article\ArticlePathsTrait;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Article extends Model
 {
-    use ArticlePathsTrait;
+    use ArticlePathsTrait, ArticleFeaturesTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -44,62 +45,6 @@ class Article extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    /**
-     * A collection of approved articles.
-     *
-     * @param  string $query
-     * @param  bool $flag
-     * @return mixed
-     */
-    public function scopeApproved($query, $flag)
-    {
-        return $query->where('status', $flag);
-    }
-
-    /**
-     * Get published articles
-     *
-     * @param  $query
-     * @return collection
-     */
-    public function scopePublished($query)
-    {
-        return $query->where('published_at', '<=', Carbon::now());
-    }
-
-    /**
-     * Get unpublished articles
-     *
-     * @param  $query
-     * @return collection
-     */
-    public function scopeUnpublished($query)
-    {
-        return $query->where('published_at', '>=', Carbon::now());
-    }
-
-    /**
-     * An approved article
-     *
-     * @param  bool  $bool
-     * @return boolean
-     */
-    public function status()
-    {
-        if ($this->status == false)
-        {
-            return "Under te consideration";
-        }
-        elseif ($this->status == true && $this->published_at >= Carbon::today())
-        {
-            return "Approved";
-        }
-        elseif ($this->status == true && $this->published_at <= Carbon::today()) {
-            return "Published";
-        }
-
     }
 
     /**

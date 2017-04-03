@@ -44,7 +44,7 @@ class ArticleController extends Controller
      */
     public function byCategory(Category $category)
     {
-        $articles = $this->getPublishedBy($category);
+        $articles = $this->getPublishedBy($category)->paginate($this->pp);
 
         return view('articles.index', compact('articles'));
     }
@@ -57,7 +57,7 @@ class ArticleController extends Controller
      */
     public function byUser(User $user)
     {
-        $articles = $this->getPublishedBy($user);
+        $articles = $this->getPublishedBy($user)->paginate($this->pp);
 
         return view('articles.index', compact('articles'));
     }
@@ -104,7 +104,12 @@ class ArticleController extends Controller
     {
         $article = $this->getArticle($article->id);
 
-        return view('articles.show', compact('article'));
+        if ($article->isPublished() || Gate::allows('view', $article))
+        {
+            return view('articles.show', compact('article'));
+        }
+
+        return view('welcome');
     }
 
     /**

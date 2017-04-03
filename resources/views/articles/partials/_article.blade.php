@@ -12,7 +12,7 @@
 
         <!-- Title -->
         <h4 class="media-heading">
-            <a href="{{ $article->category_path('show') }}">
+            <a href="{{ route('articles.show', [str_slug($article->category->name), str_slug($article->title)]) }}">
                 {{ $article->title }}
             </a>
         </h4>

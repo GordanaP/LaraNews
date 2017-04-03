@@ -28,6 +28,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+
+    public function path($name)
+    {
+        return route('users.'.$name, str_slug($this->name));
+    }
+
     /**
      * A user has many articles.
      *

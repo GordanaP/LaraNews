@@ -18,6 +18,23 @@ trait UserTrait
     }
 
     /**
+     * Assigne roles to the authenticaed user.
+     *
+     * @param  array  $role
+     * @return mixed
+     */
+    public function assignRole($role)
+    {
+        if (count($this->roles))
+        {
+            return $this->roles()->sync($role);
+        }
+
+        return $this->roles()->attach($role);
+    }
+
+
+    /**
      * An authenticated user has one or multiple roles.
      *
      * @param  string or coll  $role
@@ -35,6 +52,7 @@ trait UserTrait
         return !! $role->intersect($this->roles)->count();
     }
 
+
     /**
      * An authenticated user owns an article.
      *
@@ -46,17 +64,10 @@ trait UserTrait
         return $this->id  == $article->user_id;
     }
 
-    public function isOwner($article)
+
+    public function isSectionEditorFor($article)
     {
-        return $this->where('id', $article->user_id)->firstOrFail();
-    }
-
-
-    public function actAs($role)
-    {
-        $role = Role::with('users')->where('name', $role)->firstOrFail();
-
-        return $role->users;
+        return $this->hasRole('editor') && $this->profile->category_id == $article->category_id;
     }
 
 }
